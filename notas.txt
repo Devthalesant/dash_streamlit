@@ -1,0 +1,10 @@
+Ativar o ambiente virtual : 
+
+cd dash-mkt-pc 
+. .\venv\Scripts\Activate.ps1
+
+streamlit run app.py
+
+install requirements:
+
+pip install -r requirements.txt
