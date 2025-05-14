@@ -8,6 +8,7 @@ from frontend.st_mkt.mkt_leads_view import load_page_mkt_leads
 from frontend.st_dash.lead_view import load_page_leads
 from frontend.st_dash.appointments_view import load_page_appointments
 from frontend.st_dash.sales_view import load_page_sales
+from frontend.st_dash.funil import load_page_funil
 
 # COC
 from frontend.st_coc.leadsByUserReport_view import load_page_leadsByUser
@@ -51,6 +52,7 @@ def main():
             "1 - Leads": load_page_leads,
             "2 - Agendamentos": load_page_appointments,
             "3 - Vendas": load_page_sales,
+            "4 - Funil" : load_page_funil,
         },
         "Marketing": {
             "1 - Funil": load_page_marketing,

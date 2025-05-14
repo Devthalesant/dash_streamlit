@@ -6,8 +6,10 @@ import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 # Load environment variables with more explicit path
-env_path = Path('/Users/luisfaria/Desktop/sEngineer/dash/.env')
+env_path = Path.cwd() / '.env'
+
 load_dotenv(dotenv_path=env_path, override=True)
 
 logger = logging.getLogger(__name__)

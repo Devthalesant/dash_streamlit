@@ -8,3 +8,15 @@ streamlit run app.py
 install requirements:
 
 pip install -r requirements.txt
+
+## Entrando ambiente de teste (feature/test) - aleterações aqui não interferem no master
+
+git checkout feature/test
+
+## subindo no github uma alteração do feature/test - não interefe no master
+git add .
+git commit -m "teste"
+git push origin feature/test
+
+## voltando para o ambiente master - Não testar nada aqui
+git checkout master 
