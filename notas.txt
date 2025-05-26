@@ -14,9 +14,9 @@ pip install -r requirements.txt
 git checkout feature/test
 
 ## subindo no github uma alteração do feature/test - não interefe no master
-git add .
-git commit -m "teste"
-git push origin feature/test
+git add . # aqui estou salvando na máquina
+git commit -m "teste" # Comitando o que foi feito, mas segue na máquina
+git push origin feature/test # push para o github
 
 ## voltando para o ambiente master - Não testar nada aqui
 git checkout master 

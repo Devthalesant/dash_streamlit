@@ -10,10 +10,10 @@ status_agendamentos_marketing = ['Agendado', 'Falta', 'Cancelado', 'Abandono', '
 status_comparecimentos_marketing = ['Atendido']
 
 stores_to_remove = [
-                    # 'HOMA',
-                    # 'PLÁSTICA',
-                    # 'PRAIA GRANDE',
-                    # 'CENTRAL'
+                    #'HOMA',
+                    #'PLÁSTICA',
+                    'PRAIA GRANDE',
+                    #'CENTRAL'
 ]
 
 aesthetic_procedures_aval = [
