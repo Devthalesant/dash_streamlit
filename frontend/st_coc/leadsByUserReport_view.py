@@ -49,6 +49,8 @@ def load_page_leadsByUser():
     start_date, end_date = date_input()
     
     if st.button("Carregar"):
+        agora = datetime.now()
+        hora_atual = agora.time()
         send_discord_message(f"Loading data in page leadsByUserReport_view")
         with st.spinner("Carregando dados..."):
             df_leadsByUser, df_appointments = load_data(start_date, end_date)
@@ -170,16 +172,17 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_tarde_totals = append_total_rows_leadsByUser(df_leadsByUser_and_appointments_tarde)
                 
                 st.subheader("Leads e Agendamentos - Manhã")
+                st.caption(f"o horário da puxada é: {hora_atual}")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_manha_totals),
+                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_manha_totals,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_manha)* 45, 
                     use_container_width=True)
 
                 st.subheader("Leads e Agendamentos - Tarde")
-                
+                st.caption(f"o horário da puxada é: {hora_atual}")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_tarde_totals),
+                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_tarde_totals,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_tarde) * 45,
                     use_container_width=True)
@@ -194,7 +197,7 @@ def load_page_leadsByUser():
 
                 st.subheader("Leads e Agendamentos - Fechamento")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_all),
+                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_all,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_all) * 45,
                     use_container_width=True)
