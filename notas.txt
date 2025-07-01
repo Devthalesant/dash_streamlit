@@ -20,3 +20,8 @@ git push origin feature/test # push para o github
 
 ## voltando para o ambiente master - Não testar nada aqui
 git checkout master 
+
+
+
+## Link do streamlit
+https://dashboard-procorpo-2025.streamlit.app/
