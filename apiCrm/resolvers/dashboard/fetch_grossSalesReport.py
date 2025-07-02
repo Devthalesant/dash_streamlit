@@ -29,8 +29,8 @@ async def fetch_grossSalesReport(session, start_date: str, end_date: str) -> Lis
     """
     current_page = 1
     all_gross_sales = []
-    api_url = os.getenv('API_CRM_URL', 'https://open-api.queromeubotox.com.br/graphql')
-
+    # api_url = os.getenv('API_CRM_URL', 'https://open-api.queromeubotox.com.br/graphql')
+    api_url = os.getenv('API_CRM_URL', 'https://open-api.eprocorpo.com.br/graphql')
     # Updated query with non-nullable types (Date!) for date parameters
     query = '''
     query GrossSalesReport($start: Date!, $end: Date!, $currentPage: Int = 1) {
