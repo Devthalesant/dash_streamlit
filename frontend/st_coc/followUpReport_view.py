@@ -34,8 +34,6 @@ def load_data(start_date=None, end_date=None):
         try:
             # Run both queries concurrently with a single asyncio.run call
             entries_data, comments_data, gross_sales_data = asyncio.run(fetch_all_data(start_date, end_date))
-            st.write("Teste!!!!!! - Verificando dados carregados")
-            st.write(gross_sales_data)
             return pd.DataFrame(entries_data), pd.DataFrame(comments_data), pd.DataFrame(gross_sales_data)
         except Exception as e:
             st.error(f"Erro ao carregar dados: {str(e)}")
