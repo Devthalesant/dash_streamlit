@@ -120,7 +120,7 @@ def load_page_salesByDay():
             total_sales = df_sales['Valor líquido'].sum()
             formatted_total = f"R$ {total_sales:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
             #st.header("Estatísticas Gerais 💎")
-            st.header("Teste feature 💎")
+            st.header("KPI´s Vendas 💎")
             col1, col2, col3 = st.columns(3)
 
             with col1:
