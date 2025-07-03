@@ -59,6 +59,7 @@ def load_page_followUpReport_and_followUpCommentsReport():
         with st.spinner("Carregando dados..."):
 
             df_entries, df_comments, df_gross_sales = load_data(start_date, end_date)
+
             if df_gross_sales.empty:
                 st.error("Não foi possível obter dados de vendas.")
                 df_gross_sales['chargableTotal'] = 0 

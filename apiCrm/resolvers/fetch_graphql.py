@@ -15,7 +15,7 @@ load_dotenv(dotenv_path=env_path, override=True)
 logger = logging.getLogger(__name__)
 
 # Fallback token that's known to work
-FALLBACK_TOKEN = 'XXXXXXXXX'
+FALLBACK_TOKEN = '145418|arQc09gsrcSNJipgDRaM4Ep6rl3aJGkLtDMnxa0u'
 
 async def fetch_graphql(session, url, query, variables):
     """
@@ -28,7 +28,8 @@ async def fetch_graphql(session, url, query, variables):
         variables: Query variables
     """
     # Try to get token from environment, fall back to hardcoded if needed
-    token = os.getenv('API_CRM_TOKEN')
+    # token = os.getenv('API_CRM_TOKEN')
+    token = FALLBACK_TOKEN
 
     headers = {
         'Content-Type': 'application/json',
