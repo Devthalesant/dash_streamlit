@@ -226,26 +226,49 @@ async def fetch_grossSalesReport(session, start_date: str, end_date: str) -> Lis
                             bill_items = bill.get('items', []) or []
 
                             # Format telephones
-                            telephones_data = customer.get('telephones', [])
-                            telephones = ', '.join([tel.get('number', '') for tel in telephones_data]) if telephones_data else None
+                            # telephones_data = customer.get('telephones', [])
+                            # telephones = ', '.join([tel.get('number', '') for tel in telephones_data]) if telephones_data else None
 
-                            # Format evaluations (list of employees)
+                            # # Format evaluations (list of employees)
+                            # employees = ', '.join([
+                            #     (eval.get('employee') or {}).get('name', '') 
+                            #     for eval in evaluations if eval.get('employee')
+                            # ]) if evaluations else None
+
+                            # # Format bill items
+                            # items_descriptions = '; '.join([
+                            #     f"{item.get('description', '')} (Q:{item.get('quantity', '')}, V:{item.get('amount', '')}, D:{item.get('discountAmount', '')} - {item.get('discountPercentage', '')}%)"
+                            #     for item in bill_items
+                            # ]) if bill_items else None
+
+                            # # Format group labels from procedures in bill items
+                            # procedure_group_labels = ', '.join([
+                            #     (item.get('procedure') or {}).get('groupLabel', '') 
+                            #     for item in bill_items if item.get('procedure')
+                            # ]) if bill_items else None
+
+
+                            # testes!!!!!!!!!!!!!!!!!!!!! 
+                            
+                            telephones = ', '.join([str(tel.get('number', '')) or '' for tel in telephones_data]) if telephones_data else None
+
                             employees = ', '.join([
-                                (eval.get('employee') or {}).get('name', '') 
+                                str((eval.get('employee') or {}).get('name') or '') 
                                 for eval in evaluations if eval.get('employee')
                             ]) if evaluations else None
 
-                            # Format bill items
                             items_descriptions = '; '.join([
-                                f"{item.get('description', '')} (Q:{item.get('quantity', '')}, V:{item.get('amount', '')}, D:{item.get('discountAmount', '')} - {item.get('discountPercentage', '')}%)"
+                                f"{str(item.get('description') or '')} (Q:{item.get('quantity') or ''}, V:{item.get('amount') or ''}, D:{item.get('discountAmount') or ''} - {item.get('discountPercentage') or ''}%)"
                                 for item in bill_items
                             ]) if bill_items else None
 
-                            # Format group labels from procedures in bill items
                             procedure_group_labels = ', '.join([
-                                (item.get('procedure') or {}).get('groupLabel', '') 
+                                str((item.get('procedure') or {}).get('groupLabel') or '') 
                                 for item in bill_items if item.get('procedure')
                             ]) if bill_items else None
+                            
+                            # testes!!!!!!!!!!!!!!!!!!!!! 
+                            
 
                             transformed_sale = {
                                 'id': sale.get('id'),
