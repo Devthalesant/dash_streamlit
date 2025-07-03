@@ -156,7 +156,7 @@ async def fetch_grossSalesReport(session, start_date: str, end_date: str) -> Lis
                 #     (item.get('procedure') or {}).get('groupLabel', '') 
                 #     for item in bill_items if item.get('procedure')
                 # ]) if bill_items else None
-
+                telephones_data = customer.get('telephones', [])
                 telephones = ', '.join([str(tel.get('number', '')) or '' for tel in telephones_data]) if telephones_data else None
 
                 employees = ', '.join([
@@ -266,6 +266,7 @@ async def fetch_grossSalesReport(session, start_date: str, end_date: str) -> Lis
                             #     for item in bill_items if item.get('procedure')
                             # ]) if bill_items else None
 
+                            telephones_data = customer.get('telephones', [])
                             telephones = ', '.join([str(tel.get('number', '')) or '' for tel in telephones_data]) if telephones_data else None
 
                             employees = ', '.join([
