@@ -57,6 +57,7 @@ def load_page_leadsByStore():
     """Main function to display leads by user data."""
 
     st.title("📊 2 - Puxada de Leads por Loja")
+    st.subheader("Thales Está online!!!!!!!!!")
     st.markdown("---")
     st.subheader("Selecione o intervalo de datas para o relatório:")
     
