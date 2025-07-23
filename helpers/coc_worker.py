@@ -15,16 +15,14 @@ def normalize_name(name: str) -> str:
     name = name.title()                       # capitaliza cada palavra
     return name
 
-def apply_formatting_leadsByUser(df, hora_atual):
+def apply_formatting_leadsByUser_manha(df, hora_atual):
     def get_threshold(hora):
-        if time(8, 0, 0) <= hora <= time(11, 59, 0):
-            return 50
-        elif time(12, 0, 0) <= hora <= time(13, 59, 0):
-            return 100
-        elif time(14, 0, 0) <= hora <= time(16, 59, 0):
-            return 150
-        elif time(17, 0, 0) <= hora <= time(20, 30, 0):
-            return 200
+        if time(11, 0, 0) <= hora <= time(14, 59, 0): # 08:00 até 11:59 
+            return 33
+        elif time(15, 0, 0) <= hora <= time(18, 59, 0): # 12:00 até 16:00
+            return 55
+        elif time(19, 0, 0) <= hora <= time(23, 30, 0): # 16:00 até 20:30
+            return 90
         else:
             return None  # Fora dos intervalos definidos
 
@@ -41,7 +39,64 @@ def apply_formatting_leadsByUser(df, hora_atual):
         'Leads Puxados': '{:.0f}',
         'Leads Puxados (únicos)': '{:.0f}',
         'Agendamentos por lead': '{:.0f}',
-        'Agendamentos na Agenda': '{:.0f}'
+        'Agendamentos na Agenda': '{:.0f}',
+        'Total De Agendamentos': '{:.0f}',
+    })
+
+def apply_formatting_leadsByUser_tarde(df, hora_atual):
+    def get_threshold(hora):
+        if time(11, 0, 0) <= hora <= time(14, 59, 0): # 08:00 até 11:59 
+            return 0
+        elif time(15, 0, 0) <= hora <= time(18, 59, 0): # 12:00 até 16:00
+            return 33
+        elif time(19, 0, 0) <= hora <= time(23, 30, 0): # 16:00 até 20:30
+            return 55
+        else:
+            return None  # Fora dos intervalos definidos
+
+    threshold = get_threshold(hora_atual)
+    styles = df.style.apply(highlight_total_row_leadsByUser, axis=1)
+    if 'Leads Puxados' in df.columns and threshold is not None:
+        styles = styles.applymap(
+            lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
+                'color: green' if isinstance(v, (int, float)) and v >= threshold else ''
+            ),
+            subset=['Leads Puxados']
+        )
+    return styles.format({
+        'Leads Puxados': '{:.0f}',
+        'Leads Puxados (únicos)': '{:.0f}',
+        'Agendamentos por lead': '{:.0f}',
+        'Agendamentos na Agenda': '{:.0f}',
+        'Total De Agendamentos': '{:.0f}',
+    })
+
+def apply_formatting_leadsByUser_fechamento(df, hora_atual):
+    def get_threshold(hora):
+        if time(11, 0, 0) <= hora <= time(14, 59, 0): # 08:00 até 11:59 
+            return 90
+        elif time(15, 0, 0) <= hora <= time(18, 59, 0): # 12:00 até 16:00
+            return 90
+        elif time(19, 0, 0) <= hora <= time(23, 30, 0): # 16:00 até 20:30
+            return 90
+        else:
+            return None  # Fora dos intervalos definidos
+
+    threshold = get_threshold(hora_atual)
+    styles = df.style.apply(highlight_total_row_leadsByUser, axis=1)
+    if 'Leads Puxados' in df.columns and threshold is not None:
+        styles = styles.applymap(
+            lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
+                'color: green' if isinstance(v, (int, float)) and v >= threshold else ''
+            ),
+            subset=['Leads Puxados']
+        )
+    return styles.format({
+        'Leads Puxados': '{:.0f}',
+        'Leads Puxados (únicos)': '{:.0f}',
+        'Agendamentos por lead': '{:.0f}',
+        'Agendamentos na Agenda': '{:.0f}',
+        'Total De Agendamentos': '{:.0f}',
     })
 
 def apply_formatting_followUpReport(df):

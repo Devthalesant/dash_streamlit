@@ -6,7 +6,7 @@ from components.date_input import date_input
 from frontend.coc.atendentes import get_atendente_from_spreadsheet
 from apiCrm.resolvers.coc.fetch_leadsByUserReport import fetch_and_process_leadsByUserReport
 from apiCrm.resolvers.dashboard.fetch_appointmentReport import fetch_and_process_appointment_report_created_at
-from helpers.coc_worker import normalize_name, apply_formatting_leadsByUser
+from helpers.coc_worker import normalize_name, apply_formatting_leadsByUser_manha, apply_formatting_leadsByUser_tarde, apply_formatting_leadsByUser_fechamento
 from helpers.data_wrestler import (
     extract_agendamentos,
     append_total_rows_leadsByUser,
@@ -155,6 +155,8 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.drop(columns=['Nome da primeira atendente'])
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.fillna(0)
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.rename(columns={'ID agendamento': 'Agendamentos na Agenda'})
+                df_leadsByUser_and_appointments_manha["Total De Agendamentos"] = df_leadsByUser_and_appointments_manha['Agendamentos por lead'] + df_leadsByUser_and_appointments_manha['Agendamentos na Agenda']
+                df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.drop(columns=['Agendamentos na Agenda'])
 
                 df_leadsByUser_and_appointments_tarde = pd.merge(
                     df_leadsByUser_tarde,
@@ -166,6 +168,8 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.drop(columns=['Nome da primeira atendente'])
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.fillna(0)
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.rename(columns={'ID agendamento': 'Agendamentos na Agenda'})
+                df_leadsByUser_and_appointments_tarde["Total De Agendamentos"] = df_leadsByUser_and_appointments_tarde['Agendamentos por lead'] + df_leadsByUser_and_appointments_tarde['Agendamentos na Agenda']
+                df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.drop(columns=['Agendamentos na Agenda'])
 
                 # --- Adding TOTALS before displaying ---
                 df_leadsByUser_and_appointments_manha_totals = append_total_rows_leadsByUser(df_leadsByUser_and_appointments_manha)
@@ -174,7 +178,7 @@ def load_page_leadsByUser():
                 st.subheader("Leads e Agendamentos - Manhã")
                 st.caption(f"o horário da puxada é: {hora_atual}")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_manha_totals,hora_atual),
+                    apply_formatting_leadsByUser_manha(df_leadsByUser_and_appointments_manha_totals,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_manha)* 45, 
                     use_container_width=True)
@@ -182,7 +186,7 @@ def load_page_leadsByUser():
                 st.subheader("Leads e Agendamentos - Tarde")
                 st.caption(f"o horário da puxada é: {hora_atual}")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_tarde_totals,hora_atual),
+                    apply_formatting_leadsByUser_tarde(df_leadsByUser_and_appointments_tarde_totals,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_tarde) * 45,
                     use_container_width=True)
@@ -195,9 +199,10 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_all.sort_values(by='Leads Puxados (únicos)', ascending=False, inplace=True)
                 df_leadsByUser_and_appointments_all = append_total_rows_leadsByUser(df_leadsByUser_and_appointments_all)
 
+
                 st.subheader("Leads e Agendamentos - Fechamento")
                 st.dataframe(
-                    apply_formatting_leadsByUser(df_leadsByUser_and_appointments_all,hora_atual),
+                    apply_formatting_leadsByUser_fechamento(df_leadsByUser_and_appointments_all,hora_atual),
                     hide_index=True,
                     height=len(df_leadsByUser_and_appointments_all) * 45,
                     use_container_width=True)
