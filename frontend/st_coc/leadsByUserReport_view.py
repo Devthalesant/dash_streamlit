@@ -66,8 +66,6 @@ def load_page_leadsByUser():
                 df_leadsByUser['agendamentos_por_lead'] = 0
                 df_leadsByUser['agendamentos_por_lead'] = df_leadsByUser['messages_count_by_status'].apply(extract_agendamentos)
                                 
-                # df_leadsByUser = enrich_leadsByUser_df(df_leadsByUser, atendentes_puxadas_manha, atendentes_puxadas_tarde)
-                
                 # Rename columns
                 df_leadsByUser = df_leadsByUser.rename(columns={
                     'name': 'Atendente',
@@ -79,6 +77,12 @@ def load_page_leadsByUser():
                     'turno': 'Turno',
                     'success_rate': 'Conversão'
                 })
+
+                df_leadsByUser['Conversão'] = df_leadsByUser['Conversão'].str.replace(',', '.')
+                df_leadsByUser['Conversão'] = df_leadsByUser['Conversão'].str.rstrip('%')
+                df_leadsByUser['Conversão'] = df_leadsByUser['Conversão'].astype(float) / 100 
+                
+
                 
                 df_leadsByUser = df_leadsByUser.reset_index(drop=True)
                 df_leadsByUser = df_leadsByUser.sort_values(by='Leads Puxados', ascending=False)
@@ -174,7 +178,7 @@ def load_page_leadsByUser():
                 # --- Adding TOTALS before displaying ---
                 df_leadsByUser_and_appointments_manha_totals = append_total_rows_leadsByUser(df_leadsByUser_and_appointments_manha)
                 df_leadsByUser_and_appointments_tarde_totals = append_total_rows_leadsByUser(df_leadsByUser_and_appointments_tarde)
-                
+
                 st.subheader("Leads e Agendamentos - Manhã")
                 st.caption(f"o horário da puxada é: {hora_atual}")
                 st.dataframe(

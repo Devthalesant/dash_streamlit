@@ -17,17 +17,19 @@ def normalize_name(name: str) -> str:
 
 def apply_formatting_leadsByUser_manha(df, hora_atual):
     def get_threshold(hora):
-        if time(11, 0, 0) <= hora <= time(14, 59, 0): # 08:00 até 11:59 
+        if time(11, 0, 0) <= hora <= time(14, 59, 0): # 11:00 até 14:59
             return 33
-        elif time(15, 0, 0) <= hora <= time(18, 59, 0): # 12:00 até 16:00
+        elif time(15, 0, 0) <= hora <= time(18, 59, 0): # 15:00 até 18:59
             return 55
-        elif time(19, 0, 0) <= hora <= time(23, 30, 0): # 16:00 até 20:30
+        elif time(19, 0, 0) <= hora <= time(23, 30, 0): # 19:00 até 23:30
             return 90
         else:
-            return None  # Fora dos intervalos definidos
+            return None
 
     threshold = get_threshold(hora_atual)
     styles = df.style.apply(highlight_total_row_leadsByUser, axis=1)
+
+    # Aplicação condicional de cores para 'Leads Puxados'
     if 'Leads Puxados' in df.columns and threshold is not None:
         styles = styles.applymap(
             lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
@@ -35,12 +37,28 @@ def apply_formatting_leadsByUser_manha(df, hora_atual):
             ),
             subset=['Leads Puxados']
         )
+
+    # Aplicando cores para a coluna 'Conversão'
+    if 'Conversão' in df.columns:
+        df['Conversão'] = pd.to_numeric(df['Conversão'], errors='coerce')
+        
+        def color_conversion(val):
+            if isinstance(val, (int, float)):
+                if val < 0.05:
+                    return 'color: red'
+                elif val >= 0.05:
+                    return 'color: green'
+            return ''
+
+        styles = styles.applymap(color_conversion, subset=['Conversão'])
+
     return styles.format({
         'Leads Puxados': '{:.0f}',
         'Leads Puxados (únicos)': '{:.0f}',
         'Agendamentos por lead': '{:.0f}',
         'Agendamentos na Agenda': '{:.0f}',
         'Total De Agendamentos': '{:.0f}',
+        'Conversão': '{:.2%}'
     })
 
 def apply_formatting_leadsByUser_tarde(df, hora_atual):
@@ -63,12 +81,27 @@ def apply_formatting_leadsByUser_tarde(df, hora_atual):
             ),
             subset=['Leads Puxados']
         )
+    # Aplicando cores para a coluna 'Conversão'
+    if 'Conversão' in df.columns:
+        df['Conversão'] = pd.to_numeric(df['Conversão'], errors='coerce')
+        
+        def color_conversion(val):
+            if isinstance(val, (int, float)):
+                if val < 0.05:
+                    return 'color: red'
+                elif val >= 0.05:
+                    return 'color: green'
+            return ''
+
+        styles = styles.applymap(color_conversion, subset=['Conversão'])
+
     return styles.format({
         'Leads Puxados': '{:.0f}',
         'Leads Puxados (únicos)': '{:.0f}',
         'Agendamentos por lead': '{:.0f}',
         'Agendamentos na Agenda': '{:.0f}',
         'Total De Agendamentos': '{:.0f}',
+        'Conversão': '{:.2%}'
     })
 
 def apply_formatting_leadsByUser_fechamento(df, hora_atual):
@@ -91,12 +124,27 @@ def apply_formatting_leadsByUser_fechamento(df, hora_atual):
             ),
             subset=['Leads Puxados']
         )
+    # Aplicando cores para a coluna 'Conversão'
+    if 'Conversão' in df.columns:
+        df['Conversão'] = pd.to_numeric(df['Conversão'], errors='coerce')
+        
+        def color_conversion(val):
+            if isinstance(val, (int, float)):
+                if val < 0.05:
+                    return 'color: red'
+                elif val >= 0.05:
+                    return 'color: green'
+            return ''
+
+        styles = styles.applymap(color_conversion, subset=['Conversão'])
+
     return styles.format({
         'Leads Puxados': '{:.0f}',
         'Leads Puxados (únicos)': '{:.0f}',
         'Agendamentos por lead': '{:.0f}',
         'Agendamentos na Agenda': '{:.0f}',
         'Total De Agendamentos': '{:.0f}',
+        'Conversão': '{:.2%}'
     })
 
 def apply_formatting_followUpReport(df):
