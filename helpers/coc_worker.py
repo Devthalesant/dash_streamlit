@@ -31,7 +31,7 @@ def apply_formatting_leadsByUser_manha(df, hora_atual):
 
     # Aplicação condicional de cores para 'Leads Puxados'
     if 'Leads Puxados' in df.columns and threshold is not None:
-        styles = styles.applymap(
+        styles = styles.map(
             lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
                 'color: green' if isinstance(v, (int, float)) and v >= threshold else ''
             ),
@@ -50,7 +50,7 @@ def apply_formatting_leadsByUser_manha(df, hora_atual):
                     return 'color: green'
             return ''
 
-        styles = styles.applymap(color_conversion, subset=['Conversão'])
+        styles = styles.map(color_conversion, subset=['Conversão'])
 
     return styles.format({
         'Leads Puxados': '{:.0f}',
@@ -75,7 +75,7 @@ def apply_formatting_leadsByUser_tarde(df, hora_atual):
     threshold = get_threshold(hora_atual)
     styles = df.style.apply(highlight_total_row_leadsByUser, axis=1)
     if 'Leads Puxados' in df.columns and threshold is not None:
-        styles = styles.applymap(
+        styles = styles.map(
             lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
                 'color: green' if isinstance(v, (int, float)) and v >= threshold else ''
             ),
@@ -93,7 +93,7 @@ def apply_formatting_leadsByUser_tarde(df, hora_atual):
                     return 'color: green'
             return ''
 
-        styles = styles.applymap(color_conversion, subset=['Conversão'])
+        styles = styles.map(color_conversion, subset=['Conversão'])
 
     return styles.format({
         'Leads Puxados': '{:.0f}',
@@ -118,7 +118,7 @@ def apply_formatting_leadsByUser_fechamento(df, hora_atual):
     threshold = get_threshold(hora_atual)
     styles = df.style.apply(highlight_total_row_leadsByUser, axis=1)
     if 'Leads Puxados' in df.columns and threshold is not None:
-        styles = styles.applymap(
+        styles = styles.map(
             lambda v: 'color: red' if isinstance(v, (int, float)) and v < threshold else (
                 'color: green' if isinstance(v, (int, float)) and v >= threshold else ''
             ),
@@ -136,7 +136,7 @@ def apply_formatting_leadsByUser_fechamento(df, hora_atual):
                     return 'color: green'
             return ''
 
-        styles = styles.applymap(color_conversion, subset=['Conversão'])
+        styles = styles.map(color_conversion, subset=['Conversão'])
 
     return styles.format({
         'Leads Puxados': '{:.0f}',
