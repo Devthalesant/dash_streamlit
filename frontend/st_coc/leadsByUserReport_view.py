@@ -159,7 +159,7 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.drop(columns=['Nome da primeira atendente'])
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.fillna(0)
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.rename(columns={'ID agendamento': 'Agendamentos na Agenda'})
-                df_leadsByUser_and_appointments_manha["Total De Agendamentos"] = df_leadsByUser_and_appointments_manha['Agendamentos na Agenda']
+                df_leadsByUser_and_appointments_manha["Total De Agendamentos"] = df_leadsByUser_and_appointments_manha['Agendamentos por lead'] + df_leadsByUser_and_appointments_manha['Agendamentos na Agenda']
                 df_leadsByUser_and_appointments_manha = df_leadsByUser_and_appointments_manha.drop(columns=['Agendamentos na Agenda'])
 
                 df_leadsByUser_and_appointments_tarde = pd.merge(
@@ -172,7 +172,7 @@ def load_page_leadsByUser():
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.drop(columns=['Nome da primeira atendente'])
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.fillna(0)
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.rename(columns={'ID agendamento': 'Agendamentos na Agenda'})
-                df_leadsByUser_and_appointments_tarde["Total De Agendamentos"] = df_leadsByUser_and_appointments_tarde['Agendamentos na Agenda']
+                df_leadsByUser_and_appointments_tarde["Total De Agendamentos"] = df_leadsByUser_and_appointments_tarde['Agendamentos por lead'] + df_leadsByUser_and_appointments_tarde['Agendamentos na Agenda']
                 df_leadsByUser_and_appointments_tarde = df_leadsByUser_and_appointments_tarde.drop(columns=['Agendamentos na Agenda'])
 
                 # --- Adding TOTALS before displaying ---
