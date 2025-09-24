@@ -3,6 +3,7 @@ import re
 # Key, Category
 category_mapping = {
     # Pró-Corpo
+    'Corporal' : 'Preenchimento Corporal',
     'Preenchimento': 'Preenchimento',
     'Botox': 'Botox',
     'Ultraformer': 'Ultraformer',
@@ -20,11 +21,12 @@ category_mapping = {
     'prolipo' : 'Enzimas',
     'Prolipo' : 'Enzimas',
     'rugas' : 'Botox',
+    'Laser' : 'Lavieen',
+    'Mancha': 'Lavieen',
+    'Melasma' : 'Lavieen',
 
     'gluteomax' : 'Gluteo Max',
     'Glúteo Max' : 'Gluteo Max',
-    'preenchimentocorporal': 'Preenchimento Corporal',
-    'preenchimentocorporaltodas': 'Preenchimento Corporal',
 
     # Cirurgia
     'Lipoaspiração': 'Lipoaspiração',
